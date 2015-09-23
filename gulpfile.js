@@ -1,8 +1,11 @@
+'use strict';
+
 var gulp = require('gulp'),
   nodemon = require('gulp-nodemon'),
   plumber = require('gulp-plumber'),
   livereload = require('gulp-livereload'),
-  less = require('gulp-less');
+  less = require('gulp-less'),
+  jshint = require('gulp-jshint');
 
 gulp.task('less', function () {
   gulp.src('./public/css/*.less')
@@ -31,6 +34,13 @@ gulp.task('develop', function () {
     this.stdout.pipe(process.stdout);
     this.stderr.pipe(process.stderr);
   });
+});
+
+gulp.task('lint', function () {
+  return gulp.src('./**.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('default', [
