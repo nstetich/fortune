@@ -9,7 +9,9 @@ var Q = require('q');
 router.get('/fortune', function(req, res) {
   Q.nfcall(child_process.exec, 'fortune')
     .then(function (stdout) {
-      res.send({fortune: stdout[0]});
+      res.status(200).send({fortune: stdout[0]});
+    }).catch(function (error) {
+      res.status(500).send({error: error});
     });
 });
 
